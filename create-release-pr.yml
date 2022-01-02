@@ -1,0 +1,38 @@
+name: RELEASE - Creates a release pull request
+
+on:
+  push:
+    branches:
+      - release/**
+      - hotfix/**
+
+jobs:
+  create-release-pr:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - name: Set up Ruby 2.6
+      uses: actions/setup-ruby@v1
+      with:
+        ruby-version: 2.6.x
+
+    - name: Setup vars
+      id: vars
+      run: |
+        echo "::set-output name=branch_name::${GITHUB_REF#refs/heads/}"
+        echo "::set-output name=branch_prefix::$(echo ${GITHUB_REF} | cut -d '/' -f 3)"
+
+    - name: Creates a release pull request
+      env:
+        GIT_PR_RELEASE_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GIT_PR_RELEASE_BRANCH_PRODUCTION: master
+        GIT_PR_RELEASE_BRANCH_STAGING: ${{ steps.vars.outputs.branch_name }}
+        GIT_PR_RELEASE_LABELS: ${{ steps.vars.outputs.branch_prefix }}
+        GIT_PR_RELEASE_TITLE: "[ReleasePR] ${{ steps.vars.outputs.branch_name }}"
+        GIT_PR_RELEASE_TEMPLATE: .git-pr-release-template
+      run: |
+        gem install -N git-pr-release -v "1.2.0"
+        git-pr-release --no-fetch
