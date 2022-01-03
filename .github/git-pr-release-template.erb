@@ -1,7 +1,6 @@
 <%= ENV['GIT_PR_RELEASE_TITLE'] %>
 | タイトル | リンク | 担当者 |
 | --- | --- | --- |
-<%- pull_requests.each do |pr| -%>
-  <%- pr_data = pr.to_hash[:data] -%>
+<%- pull_requests.each do |pr| -%><%- pr_data = pr.to_hash[:data] -%>
 | <%= pr_data[:title] %> | <%= pr_data[:user][:login] %> | <%= pr.html_link %> |
 <% end -%>
