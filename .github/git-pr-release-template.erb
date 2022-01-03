@@ -2,5 +2,5 @@
 | タイトル | リンク | 担当者 |
 | --- | --- | --- |
 <% pull_requests.each do |pr| -%>
-| <%= pr.title %> | <%= pr.html_link %> | <%= pr.user %> |
+<%= pr.to_hash %>
 <% end -%>
