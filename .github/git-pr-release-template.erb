@@ -1,4 +1,6 @@
 <%= ENV['GIT_PR_RELEASE_TITLE'] %>
+| タイトル | リンク | 担当者 |
+| --- | --- | --- |
 <% pull_requests.each do |pr| -%>
-  <%= pr.to_checklist_item %>
+| <%= pr.title %> | <%= pr.html_link %> | <%= pr.user %> |
 <% end -%>
