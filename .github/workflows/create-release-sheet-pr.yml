@@ -24,4 +24,4 @@ jobs:
       - name: Create release pr
         # if: ${{ steps.check_pr.outputs.count == 0 }}
         run: |
-          gh pr create --base ${{ BASE_BRANCH }} -t ${{ steps.check_pr.outputs.pr_title }} -b "テストです"
+          gh pr create --base ${BASE_BRANCH} -t ${{ steps.check_pr.outputs.pr_title }} -b "テストです"
