@@ -17,7 +17,7 @@ jobs:
         id: check_is_release_pr_exist
         run: |
           echo "::set-output name=branch_name::${GITHUB_REF#refs/heads/}"
-          echo "::set-output name=body::$(git log --pretty=format:'- [ ] %h :%d %s (%an)' --abbrev-commit origin/master.."
+          echo "::set-output name=body::$(git log --pretty=format:'- [ ] %h :%d %s (%an)' --abbrev-commit origin/master..)"
       # リリース用PRを作成
       - name: Create release pr
         # if: ${{ steps.check_pr.outputs.count == 0 }}
