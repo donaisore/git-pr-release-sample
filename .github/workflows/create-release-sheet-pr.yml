@@ -22,4 +22,4 @@ jobs:
       - name: Create release pr
         # if: ${{ steps.check_pr.outputs.count == 0 }}
         run: |
-          gh pr create --base master --title "title" --body "${body}"
+          gh pr create --base master --title "title" --body "${{ steps.vars.outputs.body }}"
