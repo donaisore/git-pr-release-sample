@@ -19,8 +19,12 @@ jobs:
       - name: Check does pr exists
         id: check_is_release_pr_exist
         run: |
+          export gitLogs="$(git --no-pager log --pretty=format:'- [ ] %h :%d %s (%an)' --abbrev-commit origin/master..release/0.21.0)"
+          gitLogs="${gitLogs//'%'/'%25'}"
+          gitLogs="${gitLogs//$'\n'/'%0A'}"
+          gitLogs="${gitLogs//$'\r'/'%0D'}"
           echo "::set-output name=branch_name::${GITHUB_REF#refs/heads/}"
-          echo "::set-output name=body::$(git --no-pager log --pretty=format:'- [ ] %h :%d %s (%an)' --abbrev-commit origin/master..release/0.21.0 | sed 's/\\\\n/\n/')"
+          echo "::set-output name=body::$(echo "$gitLogs")"
       # リリース用PRを作成
       - name: Create release pr
         # if: ${{ steps.check_pr.outputs.count == 0 }}
